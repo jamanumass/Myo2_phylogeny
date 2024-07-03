@@ -1,0 +1,193 @@
+IQ-TREE 2.1.3 COVID-edition built Jun 23 2022
+
+Input file name: kol_select_sp_align.fas
+Type of analysis: tree reconstruction
+Random seed number: 91871
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 66 sequences with 796 amino-acid sites
+Number of constant sites: 170 (= 21.3568% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 170 (= 21.3568% of all sites)
+Number of parsimony informative sites: 560
+Number of distinct site patterns: 703
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG
+
+State frequencies: (model)
+
+Model of rate heterogeneity: Uniform
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -28908.8649 (s.e. 780.9552)
+Unconstrained log-likelihood (without tree): -5125.1223
+Number of free parameters (#branches + #model parameters): 129
+Akaike information criterion (AIC) score: 58075.7297
+Corrected Akaike information criterion (AICc) score: 58126.0901
+Bayesian information criterion (BIC) score: 58679.3980
+
+Total tree length (sum of branch lengths): 9.0273
+Sum of internal branch lengths: 4.9129 (54.4229% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'CrgMhc1' is drawn at root
+
++--CrgMhc1
+|
+|  +--SptMhc1
++--|
+|  +--HsMhc1
+|
+|                             +--SpeMhc1
+|                       +-----|
+|                       |     |  +--DmoMhc1
+|                       |     +--|
+|                       |        +--DmMhc1
+|                    +--|
+|                    |  |                             +--CrgMhc10
+|                    |  |                          +--|
+|                    |  |                          |  +**SptMhc10
+|                    |  |                       +--|
+|                    |  |                       |  +**HsMhc10
+|                    |  |                    +--|
+|                    |  |                    |  |       +--CrgMhc16
+|                    |  |                    |  |    +--|
+|                    |  |                    |  |    |  +--SptMhc16
+|                    |  |                    |  +----|
+|                    |  |                    |       +--HsMhc16
+|                    |  |                 +--|
+|                    |  |                 |  |     +--CrgMhc9
+|                    |  |                 |  |  +--|
+|                    |  |                 |  |  |  +**SptMhc9
+|                    |  |                 |  +--|
+|                    |  |                 |     +--HsMhc9
+|                    |  |              +--|
+|                    |  |              |  |     +--CrgMhc11
+|                    |  |              |  |  +--|
+|                    |  |              |  |  |  +--SptMhc11
+|                    |  |              |  +--|
+|                    |  |              |     +--HsMhc11
+|                    |  |       +------|
+|                    |  |       |      |    +--DmoMhc2
+|                    |  |       |      +----|
+|                    |  |       |           +--DmMhc2
+|                    |  +-------|
+|                    |          |       +----------DdMhcA
+|                    |          |  +----|
+|                    |          |  |    |                 +--NfMhcA
+|                    |          |  |    |             +---|
+|                    |          |  |    |             |   +--NgMhcA
+|                    |          |  |    |         +---|
+|                    |          |  |    |         |   |    +--NgMhcC
+|                    |          |  |    |         |   +----|
+|                    |          |  |    |         |        +--NfMhcC
+|                    |          |  |    +---------|
+|                    |          |  |              |         +--NgMhcB
+|                    |          |  |              +---------|
+|                    |          |  |                        +--NfMhcB
+|                    |          +--|
+|                    |             |               +--------SpMhcA
+|                    |             |            +--|
+|                    |             |            |  +-----------SpMhcB
+|                    |             |         +--|
+|                    |             |         |  |            +-------Sc_cMhc
+|                    |             |         |  +------------|
+|                    |             |         |               +----------HsvMhc
+|                    |             |      +--|
+|                    |             |      |  |     +-----CrpMhc
+|                    |             |      |  |  +--|
+|                    |             |      |  |  |  +----AtoMhc
+|                    |             |      |  +--|
+|                    |             |      |     +-------NfeMhc
+|                    |             |   +--|
+|                    |             |   |  +---------------SprMhc
+|                    |             +---|
+|                    |                 |   +----Bad_aMhc
+|                    |                 +---|
+|                    |                     +--SppMhc
+|                 +--|
+|                 |  |     +--SptMhc20
+|                 |  +-----|
+|                 |        +--HsMhc20
+|              +--|
+|              |  |      +--CrgMhc14
+|              |  |  +---|
+|              |  |  |   |  +--SptMhc14
+|              |  |  |   +--|
+|              |  |  |      +--HsMhc14
+|              |  +--|
+|              |     |    +------CrgMhc15
+|              |     +----|
+|              |          +--HsMhc15
+|           +--|
+|           |  |     +--CrgMhc6
+|           |  |  +--|
+|           |  |  |  |  +--SptMhc6
+|           |  |  |  +--|
+|           |  |  |     +--HsMhc6
+|           |  +--|
+|           |     |  +--CrgMhc7
+|           |     +--|
+|           |        |  +**SptMhc7
+|           |        +--|
+|           |           +--HsMhc7
+|        +--|
+|        |  |     +--CrgMhc13
+|        |  |  +--|
+|        |  |  |  +--HsMhc13
+|        |  +--|
+|        |     +--SptMhc13
+|     +--|
+|     |  +----CrcMhc2
+|  +--|
+|  |  |        +--CrgMhc2
+|  |  |     +--|
+|  |  |     |  +--SptMhc2
+|  |  |  +--|
+|  |  |  |  +--HsMhc2
+|  |  +--|
+|  |     |     +--CrgMhc3
+|  |     |  +--|
+|  |     |  |  |  +--SptMhc3
+|  |     |  |  +--|
+|  |     |  |     +**HsMhc3
+|  |     +--|
+|  |        |  +--CrgMhc8
+|  |        +--|
+|  |           |  +--SptMhc8
+|  |           +--|
+|  |              +--HsMhc8
++--|
+   |     +--CrgMhc4
+   |  +--|
+   |  |  +--SptMhc4
+   +--|
+      +--HsMhc4
+
+Tree in newick format:
+
+(CrgMhc1:0.0055718078,(SptMhc1:0.0066900140,HsMhc1:0.0194450674):0.0025630967,(((((((((SpeMhc1:0.0915328229,(DmoMhc1:0.0151481952,DmMhc1:0.0311544157):0.0943981225):0.1817597177,(((((((CrgMhc10:0.0014408167,SptMhc10:0.0000010000):0.0014403527,HsMhc10:0.0000024060):0.0398464253,((CrgMhc16:0.0074529544,SptMhc16:0.0078334819):0.0049993976,HsMhc16:0.0034350131):0.1670889840):0.0271758606,((CrgMhc9:0.0014475575,SptMhc9:0.0000010000):0.0014428154,HsMhc9:0.0029104702):0.0601999330):0.0346836326,((CrgMhc11:0.0084775633,SptMhc11:0.0020138888):0.0064608368,HsMhc11:0.0090354458):0.0813910700):0.1031575607,(DmoMhc2:0.0033919143,DmMhc2:0.0053718518):0.1615333963):0.2071863916,((DdMhcA:0.3098305196,(((NfMhcA:0.0287110529,NgMhcA:0.0434486842):0.1304030068,(NgMhcC:0.0764695243,NfMhcC:0.0519475855):0.1642423815):0.1253946811,(NgMhcB:0.0837188657,NfMhcB:0.0889943906):0.2826088410):0.2918567027):0.1616255679,(((((SpMhcA:0.2761171350,SpMhcB:0.3505350514):0.0572479499,(Sc_cMhc:0.2347318277,HsvMhc:0.3120680728):0.3796148299):0.0448168165,((CrpMhc:0.1889474561,AtoMhc:0.1599937971):0.0909227884,NfeMhc:0.2238701395):0.0659223513):0.0685478777,SprMhc:0.4531073340):0.0644361136,(Bad_aMhc:0.1548649688,SppMhc:0.1051307527):0.1384568123):0.1166045931):0.0675895230):0.2406732182):0.0814905046,(SptMhc20:0.0205304005,HsMhc20:0.0215290626):0.1793321011):0.0831441497,((CrgMhc14:0.0115274492,(SptMhc14:0.0040814464,HsMhc14:0.0120623856):0.0021197042):0.1263597706,(CrgMhc15:0.2176618361,HsMhc15:0.0718571456):0.1487506943):0.0727823840):0.0916604298,((CrgMhc6:0.0114175440,(SptMhc6:0.0106665509,HsMhc6:0.0149672074):0.0030584854):0.0215979993,(CrgMhc7:0.0115900398,(SptMhc7:0.0011738409,HsMhc7:0.0238077225):0.0118987844):0.0327323355):0.0520790761):0.0643020684,((CrgMhc13:0.0102331019,HsMhc13:0.0043272464):0.0028578631,SptMhc13:0.0014659264):0.0347557115):0.0232528574,CrcMhc2:0.1649987790):0.0240040528,(((CrgMhc2:0.0130092054,SptMhc2:0.0057955794):0.0034882392,HsMhc2:0.0245105605):0.0122242388,((CrgMhc3:0.0058883158,(SptMhc3:0.0101869814,HsMhc3:0.0000023992):0.0013762211):0.0946683832,(CrgMhc8:0.0208970772,(SptMhc8:0.0047205329,HsMhc8:0.0053638177):0.0031979094):0.0140999967):0.0094425064):0.0135185392):0.0079366648,((CrgMhc4:0.0187688630,SptMhc4:0.0105944705):0.0089496663,HsMhc4:0.0159157243):0.0157024485):0.0058691090);
+
+TIME STAMP
+----------
+
+Date and time: Wed Apr 17 20:16:22 2024
+Total CPU time used: 81.1836 seconds (0h:1m:21s)
+Total wall-clock time used: 81.4577 seconds (0h:1m:21s)
+

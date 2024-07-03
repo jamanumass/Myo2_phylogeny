@@ -1,0 +1,349 @@
+IQ-TREE multicore version 2.1.3 COVID-edition for Linux 64-bit built Jun 23 2022
+Developed by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,
+Olga Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    ceewater-cpu002 (AVX2, FMA3, 125 GB RAM)
+Command: iqtree2 -s kol_select_sp_align.fas -m TIM2+I+G
+Seed:    419278 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Wed Apr 17 20:14:19 2024
+Kernel:  AVX+FMA - 1 threads (2 CPU cores detected)
+
+HINT: Use -nt option to specify number of threads because your CPU has 2 cores!
+HINT: -nt AUTO will automatically determine the best number of threads to use.
+
+Reading alignment file kol_select_sp_align.fas ... Fasta format detected
+Alignment most likely contains protein sequences
+WARNING: 1 sites contain only gaps or ambiguous characters.
+Alignment has 66 sequences with 796 columns, 703 distinct patterns
+560 parsimony-informative, 66 singleton sites, 170 constant sites
+          Gap/Ambiguity  Composition  p-value
+   1  CrgMhc1    12.06%    passed     98.11%
+   2  SptMhc1    12.19%    passed     95.75%
+   3  HsMhc1     12.56%    passed     97.33%
+   4  SpeMhc1    12.69%    passed     71.41%
+   5  DmoMhc1    13.19%    passed     55.18%
+   6  DmMhc1     13.19%    passed     49.68%
+   7  CrgMhc10   12.31%    passed     96.17%
+   8  SptMhc10   12.31%    passed     97.78%
+   9  HsMhc10    12.31%    passed     97.35%
+  10  CrgMhc11   12.31%    passed     99.98%
+  11  SptMhc11   12.31%    passed     99.95%
+  12  HsMhc11    12.31%    passed     99.97%
+  13  CrgMhc13   13.44%    passed     99.97%
+  14  SptMhc13   12.56%    passed     99.99%
+  15  HsMhc13    12.56%    passed     99.98%
+  16  CrgMhc14   12.94%    passed     95.75%
+  17  SptMhc14   12.94%    passed     98.18%
+  18  HsMhc14    12.94%    passed     93.55%
+  19  CrgMhc15   13.69%    passed     99.40%
+  20  HsMhc15    13.69%    passed     98.70%
+  21  CrgMhc16   12.69%    failed      0.52%
+  22  SptMhc16   26.63%    passed      8.05%
+  23  HsMhc16    12.69%    failed      0.54%
+  24  CrcMhc2    13.32%    passed     95.88%
+  25  CrgMhc2    12.19%    passed     96.33%
+  26  SptMhc2    12.56%    passed     95.64%
+  27  HsMhc2     12.31%    passed     95.82%
+  28  DmoMhc2    13.69%    passed     89.87%
+  29  DmMhc2     13.69%    passed     93.86%
+  30  SptMhc20   14.07%    passed     97.32%
+  31  HsMhc20    14.20%    passed     99.23%
+  32  CrgMhc3    12.94%    passed     98.94%
+  33  SptMhc3    12.94%    passed     99.13%
+  34  HsMhc3     12.94%    passed     99.67%
+  35  CrgMhc4    12.81%    passed     93.72%
+  36  SptMhc4    12.44%    passed     90.24%
+  37  HsMhc4     12.56%    passed     93.54%
+  38  CrgMhc6    12.81%    passed     99.84%
+  39  SptMhc6    12.69%    passed     99.52%
+  40  HsMhc6     12.69%    passed     99.93%
+  41  CrgMhc7    15.95%    passed     99.94%
+  42  SptMhc7    12.94%    passed     99.95%
+  43  HsMhc7     12.94%    passed     99.81%
+  44  CrgMhc8    12.94%    passed     98.70%
+  45  SptMhc8    12.94%    passed     98.85%
+  46  HsMhc8     12.94%    passed     96.46%
+  47  CrgMhc9    12.69%    passed     98.85%
+  48  SptMhc9    12.69%    passed     99.05%
+  49  HsMhc9     12.69%    passed     98.65%
+  50  DdMhcA     15.45%    passed     82.28%
+  51  NfMhcA     15.20%    passed     95.67%
+  52  NgMhcA     15.20%    passed     99.57%
+  53  SpMhcA     14.82%    passed     76.92%
+  54  NgMhcB     13.44%    failed      1.89%
+  55  NfMhcB     13.07%    passed     84.00%
+  56  SpMhcB     14.82%    passed     35.00%
+  57  NgMhcC     13.94%    passed     66.75%
+  58  NfMhcC     13.94%    passed     70.42%
+  59  Bad_aMhc   14.07%    passed     90.74%
+  60  SppMhc     13.94%    passed     89.70%
+  61  CrpMhc     13.07%    passed     68.23%
+  62  AtoMhc     14.57%    passed     30.09%
+  63  Sc_cMhc    10.05%    failed      0.00%
+  64  NfeMhc     11.68%    passed     34.76%
+  65  HsvMhc     10.55%    failed      0.00%
+  66  SprMhc      8.04%    failed      0.00%
+****  TOTAL      13.21%  6 sequences failed composition chi2 test (p-value<5%; df=19)
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.020 seconds
+ERROR: File not found TIM2
+
+******************************************************
+CHECKPOINT: Resuming analysis from kol_select_sp_align.fas.ckp.gz
+
+IQ-TREE multicore version 2.1.3 COVID-edition for Linux 64-bit built Jun 23 2022
+Developed by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,
+Olga Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    ceewater-cpu002 (AVX2, FMA3, 125 GB RAM)
+Command: iqtree2 -s kol_select_sp_align.fas -m GTM+I+G
+Seed:    699582 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Wed Apr 17 20:14:33 2024
+Kernel:  AVX+FMA - 1 threads (2 CPU cores detected)
+
+HINT: Use -nt option to specify number of threads because your CPU has 2 cores!
+HINT: -nt AUTO will automatically determine the best number of threads to use.
+
+WARNING: Command-line argument `GTM+I+G` differs from checkpoint `TIM2+I+G`
+WARNING: Command-line differs from checkpoint!
+Reading alignment file kol_select_sp_align.fas ... Fasta format detected
+Alignment most likely contains protein sequences
+WARNING: 1 sites contain only gaps or ambiguous characters.
+Alignment has 66 sequences with 796 columns, 703 distinct patterns
+560 parsimony-informative, 66 singleton sites, 170 constant sites
+          Gap/Ambiguity  Composition  p-value
+   1  CrgMhc1    12.06%    passed     98.11%
+   2  SptMhc1    12.19%    passed     95.75%
+   3  HsMhc1     12.56%    passed     97.33%
+   4  SpeMhc1    12.69%    passed     71.41%
+   5  DmoMhc1    13.19%    passed     55.18%
+   6  DmMhc1     13.19%    passed     49.68%
+   7  CrgMhc10   12.31%    passed     96.17%
+   8  SptMhc10   12.31%    passed     97.78%
+   9  HsMhc10    12.31%    passed     97.35%
+  10  CrgMhc11   12.31%    passed     99.98%
+  11  SptMhc11   12.31%    passed     99.95%
+  12  HsMhc11    12.31%    passed     99.97%
+  13  CrgMhc13   13.44%    passed     99.97%
+  14  SptMhc13   12.56%    passed     99.99%
+  15  HsMhc13    12.56%    passed     99.98%
+  16  CrgMhc14   12.94%    passed     95.75%
+  17  SptMhc14   12.94%    passed     98.18%
+  18  HsMhc14    12.94%    passed     93.55%
+  19  CrgMhc15   13.69%    passed     99.40%
+  20  HsMhc15    13.69%    passed     98.70%
+  21  CrgMhc16   12.69%    failed      0.52%
+  22  SptMhc16   26.63%    passed      8.05%
+  23  HsMhc16    12.69%    failed      0.54%
+  24  CrcMhc2    13.32%    passed     95.88%
+  25  CrgMhc2    12.19%    passed     96.33%
+  26  SptMhc2    12.56%    passed     95.64%
+  27  HsMhc2     12.31%    passed     95.82%
+  28  DmoMhc2    13.69%    passed     89.87%
+  29  DmMhc2     13.69%    passed     93.86%
+  30  SptMhc20   14.07%    passed     97.32%
+  31  HsMhc20    14.20%    passed     99.23%
+  32  CrgMhc3    12.94%    passed     98.94%
+  33  SptMhc3    12.94%    passed     99.13%
+  34  HsMhc3     12.94%    passed     99.67%
+  35  CrgMhc4    12.81%    passed     93.72%
+  36  SptMhc4    12.44%    passed     90.24%
+  37  HsMhc4     12.56%    passed     93.54%
+  38  CrgMhc6    12.81%    passed     99.84%
+  39  SptMhc6    12.69%    passed     99.52%
+  40  HsMhc6     12.69%    passed     99.93%
+  41  CrgMhc7    15.95%    passed     99.94%
+  42  SptMhc7    12.94%    passed     99.95%
+  43  HsMhc7     12.94%    passed     99.81%
+  44  CrgMhc8    12.94%    passed     98.70%
+  45  SptMhc8    12.94%    passed     98.85%
+  46  HsMhc8     12.94%    passed     96.46%
+  47  CrgMhc9    12.69%    passed     98.85%
+  48  SptMhc9    12.69%    passed     99.05%
+  49  HsMhc9     12.69%    passed     98.65%
+  50  DdMhcA     15.45%    passed     82.28%
+  51  NfMhcA     15.20%    passed     95.67%
+  52  NgMhcA     15.20%    passed     99.57%
+  53  SpMhcA     14.82%    passed     76.92%
+  54  NgMhcB     13.44%    failed      1.89%
+  55  NfMhcB     13.07%    passed     84.00%
+  56  SpMhcB     14.82%    passed     35.00%
+  57  NgMhcC     13.94%    passed     66.75%
+  58  NfMhcC     13.94%    passed     70.42%
+  59  Bad_aMhc   14.07%    passed     90.74%
+  60  SppMhc     13.94%    passed     89.70%
+  61  CrpMhc     13.07%    passed     68.23%
+  62  AtoMhc     14.57%    passed     30.09%
+  63  Sc_cMhc    10.05%    failed      0.00%
+  64  NfeMhc     11.68%    passed     34.76%
+  65  HsvMhc     10.55%    failed      0.00%
+  66  SprMhc      8.04%    failed      0.00%
+****  TOTAL      13.21%  6 sequences failed composition chi2 test (p-value<5%; df=19)
+
+CHECKPOINT: Initial tree restored
+ERROR: File not found GTM
+
+******************************************************
+CHECKPOINT: Resuming analysis from kol_select_sp_align.fas.ckp.gz
+
+IQ-TREE multicore version 2.1.3 COVID-edition for Linux 64-bit built Jun 23 2022
+Developed by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,
+Olga Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    ceewater-cpu002 (AVX2, FMA3, 125 GB RAM)
+Command: iqtree2 -s kol_select_sp_align.fas -m LG
+Seed:    91871 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Wed Apr 17 20:15:01 2024
+Kernel:  AVX+FMA - 1 threads (2 CPU cores detected)
+
+HINT: Use -nt option to specify number of threads because your CPU has 2 cores!
+HINT: -nt AUTO will automatically determine the best number of threads to use.
+
+WARNING: Command-line argument `LG` differs from checkpoint `TIM2+I+G`
+WARNING: Command-line differs from checkpoint!
+Reading alignment file kol_select_sp_align.fas ... Fasta format detected
+Alignment most likely contains protein sequences
+WARNING: 1 sites contain only gaps or ambiguous characters.
+Alignment has 66 sequences with 796 columns, 703 distinct patterns
+560 parsimony-informative, 66 singleton sites, 170 constant sites
+          Gap/Ambiguity  Composition  p-value
+   1  CrgMhc1    12.06%    passed     98.11%
+   2  SptMhc1    12.19%    passed     95.75%
+   3  HsMhc1     12.56%    passed     97.33%
+   4  SpeMhc1    12.69%    passed     71.41%
+   5  DmoMhc1    13.19%    passed     55.18%
+   6  DmMhc1     13.19%    passed     49.68%
+   7  CrgMhc10   12.31%    passed     96.17%
+   8  SptMhc10   12.31%    passed     97.78%
+   9  HsMhc10    12.31%    passed     97.35%
+  10  CrgMhc11   12.31%    passed     99.98%
+  11  SptMhc11   12.31%    passed     99.95%
+  12  HsMhc11    12.31%    passed     99.97%
+  13  CrgMhc13   13.44%    passed     99.97%
+  14  SptMhc13   12.56%    passed     99.99%
+  15  HsMhc13    12.56%    passed     99.98%
+  16  CrgMhc14   12.94%    passed     95.75%
+  17  SptMhc14   12.94%    passed     98.18%
+  18  HsMhc14    12.94%    passed     93.55%
+  19  CrgMhc15   13.69%    passed     99.40%
+  20  HsMhc15    13.69%    passed     98.70%
+  21  CrgMhc16   12.69%    failed      0.52%
+  22  SptMhc16   26.63%    passed      8.05%
+  23  HsMhc16    12.69%    failed      0.54%
+  24  CrcMhc2    13.32%    passed     95.88%
+  25  CrgMhc2    12.19%    passed     96.33%
+  26  SptMhc2    12.56%    passed     95.64%
+  27  HsMhc2     12.31%    passed     95.82%
+  28  DmoMhc2    13.69%    passed     89.87%
+  29  DmMhc2     13.69%    passed     93.86%
+  30  SptMhc20   14.07%    passed     97.32%
+  31  HsMhc20    14.20%    passed     99.23%
+  32  CrgMhc3    12.94%    passed     98.94%
+  33  SptMhc3    12.94%    passed     99.13%
+  34  HsMhc3     12.94%    passed     99.67%
+  35  CrgMhc4    12.81%    passed     93.72%
+  36  SptMhc4    12.44%    passed     90.24%
+  37  HsMhc4     12.56%    passed     93.54%
+  38  CrgMhc6    12.81%    passed     99.84%
+  39  SptMhc6    12.69%    passed     99.52%
+  40  HsMhc6     12.69%    passed     99.93%
+  41  CrgMhc7    15.95%    passed     99.94%
+  42  SptMhc7    12.94%    passed     99.95%
+  43  HsMhc7     12.94%    passed     99.81%
+  44  CrgMhc8    12.94%    passed     98.70%
+  45  SptMhc8    12.94%    passed     98.85%
+  46  HsMhc8     12.94%    passed     96.46%
+  47  CrgMhc9    12.69%    passed     98.85%
+  48  SptMhc9    12.69%    passed     99.05%
+  49  HsMhc9     12.69%    passed     98.65%
+  50  DdMhcA     15.45%    passed     82.28%
+  51  NfMhcA     15.20%    passed     95.67%
+  52  NgMhcA     15.20%    passed     99.57%
+  53  SpMhcA     14.82%    passed     76.92%
+  54  NgMhcB     13.44%    failed      1.89%
+  55  NfMhcB     13.07%    passed     84.00%
+  56  SpMhcB     14.82%    passed     35.00%
+  57  NgMhcC     13.94%    passed     66.75%
+  58  NfMhcC     13.94%    passed     70.42%
+  59  Bad_aMhc   14.07%    passed     90.74%
+  60  SppMhc     13.94%    passed     89.70%
+  61  CrpMhc     13.07%    passed     68.23%
+  62  AtoMhc     14.57%    passed     30.09%
+  63  Sc_cMhc    10.05%    failed      0.00%
+  64  NfeMhc     11.68%    passed     34.76%
+  65  HsvMhc     10.55%    failed      0.00%
+  66  SprMhc      8.04%    failed      0.00%
+****  TOTAL      13.21%  6 sequences failed composition chi2 test (p-value<5%; df=19)
+
+CHECKPOINT: Initial tree restored
+
+NOTE: 7 MB RAM (0 GB) is required!
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -29097.546
+Optimal log-likelihood: -28933.980
+Parameters optimization took 1 rounds (0.094 sec)
+Computing ML distances based on estimated model parameters...
+Computing ML distances took 0.080166 sec (of wall-clock time) 0.080135 sec(of CPU time)
+Computing RapidNJ tree took 0.000362 sec (of wall-clock time) 0.000375 sec (of CPU time)
+Log-likelihood of RapidNJ tree: -28977.551
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 98 parsimony trees... 1.829 second
+Computing log-likelihood of 98 initial trees ... 3.456 seconds
+Current best score: -28933.980
+
+Do NNI search on 20 best initial trees
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -28921.017
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 2: -28909.974
+Iteration 10 / LogL: -28921.029 / Time: 0h:0m:8s
+Iteration 20 / LogL: -28912.425 / Time: 0h:0m:11s
+Finish initializing candidate tree set (4)
+Current best tree score: -28909.974 / CPU time: 11.142
+Number of iterations: 20
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 24: -28909.730
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 25: -28908.867
+Iteration 30 / LogL: -28908.924 / Time: 0h:0m:18s (0h:0m:59s left)
+Iteration 40 / LogL: -28963.285 / Time: 0h:0m:24s (0h:0m:53s left)
+Iteration 50 / LogL: -28919.029 / Time: 0h:0m:31s (0h:0m:47s left)
+Iteration 60 / LogL: -28909.853 / Time: 0h:0m:38s (0h:0m:41s left)
+Iteration 70 / LogL: -28936.529 / Time: 0h:0m:44s (0h:0m:35s left)
+Iteration 80 / LogL: -28915.152 / Time: 0h:0m:51s (0h:0m:29s left)
+Iteration 90 / LogL: -28909.359 / Time: 0h:0m:58s (0h:0m:22s left)
+UPDATE BEST LOG-LIKELIHOOD: -28908.866
+Iteration 100 / LogL: -28922.320 / Time: 0h:1m:4s (0h:0m:16s left)
+Iteration 110 / LogL: -28944.381 / Time: 0h:1m:10s (0h:0m:9s left)
+Iteration 120 / LogL: -28944.474 / Time: 0h:1m:17s (0h:0m:3s left)
+TREE SEARCH COMPLETED AFTER 126 ITERATIONS / Time: 0h:1m:21s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -28908.866
+Optimal log-likelihood: -28908.865
+Parameters optimization took 1 rounds (0.060 sec)
+BEST SCORE FOUND : -28908.865
+Total tree length: 9.027
+
+Total number of iterations: 126
+CPU time used for tree search: 80.790 sec (0h:1m:20s)
+Wall-clock time used for tree search: 81.031 sec (0h:1m:21s)
+Total CPU time used: 81.184 sec (0h:1m:21s)
+Total wall-clock time used: 81.449 sec (0h:1m:21s)
+
+Analysis results written to: 
+  IQ-TREE report:                kol_select_sp_align.fas.iqtree
+  Maximum-likelihood tree:       kol_select_sp_align.fas.treefile
+  Likelihood distances:          kol_select_sp_align.fas.mldist
+  Screen log file:               kol_select_sp_align.fas.log
+
+Date and Time: Wed Apr 17 20:16:22 2024
