@@ -1,0 +1,5 @@
+XP_002671980.1       -          Amoebozoan_MyoII_motors_query -           1.4e-300  998.5   9.6  1.4e-300  998.5   9.6   2.5   3   0   0   3   3   2   1 uncharacterized protein NAEGRDRAFT_81378 [Naegleria gruberi]
+XP_002680829.1       -          Amoebozoan_MyoII_motors_query -           1.4e-292  972.1  11.0  1.4e-292  972.1  11.0   2.9   3   0   0   3   3   3   1 myosin [Naegleria gruberi]
+XP_002669917.1       -          Amoebozoan_MyoII_motors_query -           1.7e-209  697.4   6.8  2.2e-209  697.0   6.8   1.1   1   0   0   1   1   1   1 myosin [Naegleria gruberi]
+XP_002680898.1       -          Amoebozoan_MyoII_motors_query -             3e-195  650.3  14.7    3e-195  650.3  14.7   2.2   2   0   0   2   2   2   1 myosin [Naegleria gruberi]
+XP_002681567.1       -          Amoebozoan_MyoII_motors_query -             1e-192  641.9  14.2  2.1e-192  640.8  14.2   1.4   1   1   0   1   1   1   1 myosin [Naegleria gruberi]

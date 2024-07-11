@@ -1,0 +1,24 @@
+#                                                                        --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+# target name        accession  query name                    accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
+#------------------- ----------          -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
+XP_002671980.1       -          Amoebozoan_MyoII_motors_query -           1.4e-300  998.5   9.6  1.4e-300  998.5   9.6   2.5   3   0   0   3   3   2   1 uncharacterized protein NAEGRDRAFT_81378 [Naegleria gruberi]
+XP_002680829.1       -          Amoebozoan_MyoII_motors_query -           1.4e-292  972.1  11.0  1.4e-292  972.1  11.0   2.9   3   0   0   3   3   3   1 myosin [Naegleria gruberi]
+XP_002669917.1       -          Amoebozoan_MyoII_motors_query -           1.7e-209  697.4   6.8  2.2e-209  697.0   6.8   1.1   1   0   0   1   1   1   1 myosin [Naegleria gruberi]
+XP_002680898.1       -          Amoebozoan_MyoII_motors_query -             3e-195  650.3  14.7    3e-195  650.3  14.7   2.2   2   0   0   2   2   2   1 myosin [Naegleria gruberi]
+XP_002681567.1       -          Amoebozoan_MyoII_motors_query -             1e-192  641.9  14.2  2.1e-192  640.8  14.2   1.4   1   1   0   1   1   1   1 myosin [Naegleria gruberi]
+XP_002676946.1       -          Amoebozoan_MyoII_motors_query -           1.5e-177  591.7  20.1  6.4e-111  371.4   2.3   2.0   2   0   0   2   2   2   2 myosin [Naegleria gruberi]
+XP_002683472.1       -          Amoebozoan_MyoII_motors_query -           9.8e-174  579.1  13.9  2.5e-173  577.8  13.9   1.6   1   0   0   1   1   1   1 myosin [Naegleria gruberi]
+XP_002680436.1       -          Amoebozoan_MyoII_motors_query -           1.5e-153  512.4   9.6  2.1e-153  511.9   9.6   1.2   1   0   0   1   1   1   1 myosin [Naegleria gruberi]
+XP_002676561.1       -          Amoebozoan_MyoII_motors_query -           5.8e-152  507.2  15.6  7.2e-152  506.8  15.6   1.0   1   0   0   1   1   1   1 myosin, partial [Naegleria gruberi]
+XP_002682373.1       -          Amoebozoan_MyoII_motors_query -             4e-134  448.2  18.9  1.4e-123  413.3  14.5   3.2   2   1   0   2   2   2   2 myosin [Naegleria gruberi]
+XP_002677439.1       -          Amoebozoan_MyoII_motors_query -            7.7e-65  219.1  19.3   3.9e-64  216.8  19.3   2.1   1   1   0   1   1   1   1 myosin [Naegleria gruberi]
+#
+# Program:         hmmsearch
+# Version:         3.3.2 (Nov 2020)
+# Pipeline mode:   SEARCH
+# Query file:      search_for_Amoebozoan_MyoII_motors/search_results_GCF_000004985.1_V1.0/Amoebozoan_MyoII_motors.hmm
+# Target file:     /work/pi_lfritzlaylin_umass_edu/users/jaman/sequence_databases/myo2_seqs_collect_v1/full_genomes_peptide_databases/GCF_000004985.1_V1.0_protein.faa
+# Option settings: hmmsearch --tblout search_for_Amoebozoan_MyoII_motors/search_results_GCF_000004985.1_V1.0/Amoebozoan_MyoII_motors_in_GCF_000004985.1_V1.0_hmmsearch_out.txt search_for_Amoebozoan_MyoII_motors/search_results_GCF_000004985.1_V1.0/Amoebozoan_MyoII_motors.hmm /work/pi_lfritzlaylin_umass_edu/users/jaman/sequence_databases/myo2_seqs_collect_v1/full_genomes_peptide_databases/GCF_000004985.1_V1.0_protein.faa 
+# Current dir:     /work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/hmmer_search
+# Date:            Thu Jul 11 14:57:45 2024
+# [ok]
