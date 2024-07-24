@@ -54,12 +54,30 @@ extraction_output_file="$extraction_dir/${collected_seqs_base}_${domain_hmm_base
 # Run hmmsearch and extract the sequences
 hmmsearch --domtblout "${extraction_output_file}.domtblout" "$domain_hmm_file" "$collected_seqs_file"
 
-#Parse the output and extract the domains found within each of the sequences
-#Reads specific fields (columns) from the domtblout file
-#Removes duplicates.
-#For each unique entry, it extracts the corresponding sequence segment from another file.
-#The extracted sequences are saved to the specified output file.
+
+#V2 of domain extraction, this time with merge
+# Temporary file to hold merged domains
+merged_file=$(mktemp)
+
+# Read specific fields (columns) from the domtblout file, sort, and remove duplicates
 awk '$1 !~ /^#/ { print $1, $20, $21 }' "${extraction_output_file}.domtblout" | sort | uniq | while read -r seqid start end; do
+    # Check if the sequence ID already exists in the temporary merged file
+    if grep -q "^$seqid " "$merged_file"; then
+        # If it exists, update the start and end positions if necessary
+        current_start=$(awk -v seqid="$seqid" '$1 == seqid { print $2 }' "$merged_file")
+        current_end=$(awk -v seqid="$seqid" '$1 == seqid { print $3 }' "$merged_file")
+        new_start=$(( current_start < start ? current_start : start ))
+        new_end=$(( current_end > end ? current_end : end ))
+        # Update the line in the merged file
+        awk -v seqid="$seqid" -v new_start="$new_start" -v new_end="$new_end" '$1 == seqid { $2 = new_start; $3 = new_end }1' "$merged_file" > "${merged_file}.tmp" && mv "${merged_file}.tmp" "$merged_file"
+    else
+        # If it does not exist, add the line to the temporary merged file
+        echo "$seqid $start $end" >> "$merged_file"
+    fi
+done
+
+# Extract the corresponding sequence segments from the collected_seqs_file and save to the final output file
+while read -r seqid start end; do
     awk -v seqid="$seqid" -v start="$start" -v end="$end" '
     BEGIN { found = 0; header = ""; seq = "" }
     /^>/ {
@@ -76,9 +94,13 @@ awk '$1 !~ /^#/ { print $1, $20, $21 }' "${extraction_output_file}.domtblout" | 
         }
     }
     ' "$collected_seqs_file"
-done > "${extraction_output_file}.temp"
+done < "$merged_file" > "${extraction_output_file}.temp"
 
-echo "Domain extraction complete. The sequences are saved in "${extraction_output_file}.temp"
+# Clean up temporary file
+rm "$merged_file"
+
+echo "Domain extraction complete. The sequences are saved in ${extraction_output_file}.temp"
+
 
 
 
