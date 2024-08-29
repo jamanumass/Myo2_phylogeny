@@ -22,7 +22,7 @@ cd $root_dir
 
 #create new folder for the files from the run, which is based on the input file
 # Set the input name, which will also be the name of the folder in the results directory
-input_file="Amoebozoan_MyoII_motors_input.fasta"
+input_file="MyoI_motors_input.fasta"
 input_path="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/input_seqs"
 input_name="${input_file%_input.fasta}"
 run_name=$input_name

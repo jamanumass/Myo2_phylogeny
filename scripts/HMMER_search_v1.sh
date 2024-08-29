@@ -1,15 +1,15 @@
 #!/bin/bash
-#SBATCH --partition=gpu,gpu-preempt,gpu-long
-#SBATCH --constraint=vram8
-#SBATCH --gpus-per-node=1
-#SBATCH --cpus-per-gpu=8
-#SBATCH --mem-per-gpu=20G
-#SBATCH -t 8:00:00
+#SBATCH --partition=gpu-long         # Select partition
+#SBATCH --gpus=1                     # Request 1 GPU
+#SBATCH --cpus-per-gpu=16            # 16 CPU cores per GPU
+#SBATCH --mem-per-gpu=20G            # 20 GB memory per GPU
+#SBATCH -t 48:00:00
 #SBATCH -o slurm-%j.out
 #SBATCH -e slurm-%j.err
 
 module load uri/main
 module load HMMER/3.3.2-iimpi-2021b
+module load mafft/7.481
 
 
 # Set the root directory for Myo searches
@@ -18,10 +18,22 @@ cd $root_dir
 
 #create new folder for the files from the run, which is based on the input file
 # Set the input name, which will also be the name of the folder in the results directory
-input_file="Amoebozoan_MyoII_motors_input.fasta"
+input_file="MyoI_motors_input.fasta"
+#input_file="Amoebozoan_MyoII_motors_input.fasta"
 input_path="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/input_seqs"
 input_name="${input_file%_input.fasta}"
 run_name=$input_name
+
+
+#check if input is an alignment, and align if it is not
+if awk 'NR==2 {if (gsub(/-/, "&") >= 5) exit 1; else exit 0}' "${input_path}/${input_file}"; then
+    echo "Not an alignment. Running MAFFT..."
+    mafft --maxiterate 1000 --localpair --reorder "${input_path}/${input_file}" > "${input_path}/${input_file}.aligned"
+    cat "${input_path}/${input_file}.aligned" > "${input_path}/${input_file}"
+    rm "${input_path}/${input_file}.aligned"
+else
+    echo "File is already an alignment. No action taken."
+fi
 
 
 #Location of permanent protein databases
@@ -44,6 +56,10 @@ collected_IDs_file="${hmm_search_dir}/${run_name}_collected_IDs.txt"
 touch "${collected_seqs_file}"
 touch "${collected_IDs_file}"
 
+#Create the HMM for the input
+hmmbuild_file="${hmm_search_dir}/${run_name}.hmm"
+hmmbuild "${hmmbuild_file}" "${input_path}/${input_file}"
+
 #loop here through each protein database file and perform the search and sequence collection
 for file_path in "${protein_database_directory}"/*_protein.faa; do #Set the current protein genome being searched
     protein_database_file=$(basename "$file_path")
@@ -59,14 +75,10 @@ for file_path in "${protein_database_directory}"/*_protein.faa; do #Set the curr
     mkdir ${search_results_dir}
     
     #Dictate where the search result files will go and be named
-    hmmbuild_file="${search_results_dir}/${run_name}.hmm"
     hmmsearch_hits_file="${search_results_dir}/${run_name}_in_${protein_database_name}_hmmsearch_out.txt"
     
-    #build HMM and perform the search
-    hmmbuild "${hmmbuild_file}" "${input_path}/${input_file}"
+    #Perform the HMM search
     hmmsearch --tblout "${hmmsearch_hits_file}" "${hmmbuild_file}" "${protein_database_file_path}"
-    
-    
     
     # Extract the best 5 hits from the output table and save to best5 file
     #define file name
