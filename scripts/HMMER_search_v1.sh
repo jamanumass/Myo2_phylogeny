@@ -16,21 +16,28 @@ module load mafft/7.481
 root_dir="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny"
 cd $root_dir
 
-#create new folder for the files from the run, which is based on the input file
-# Set the input name, which will also be the name of the folder in the results directory
-input_file="MyoI_motors_input.fasta"
-#input_file="Amoebozoan_MyoII_motors_input.fasta"
-input_path="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/input_seqs"
-input_name="${input_file%_input.fasta}"
-run_name=$input_name
+
+
+
+# Check if INPUT_FASTA environment variable is set
+if [ -z "$INPUT_FASTA" ]; then
+  echo "Error: INPUT_FASTA environment variable is not set."
+  exit 1
+fi
+  
+run_name=$(basename $INPUT_FASTA | sed 's/_input\.fasta$//')
+
+echo "Input fasta file is $INPUT_FASTA"
+echo "Run name is $run_name"
+
 
 
 #check if input is an alignment, and align if it is not
-if awk 'NR==2 {if (gsub(/-/, "&") >= 5) exit 1; else exit 0}' "${input_path}/${input_file}"; then
+if awk 'NR==2 {if (gsub(/-/, "&") >= 5) exit 1; else exit 0}' "$INPUT_FASTA"; then
     echo "Not an alignment. Running MAFFT..."
-    mafft --maxiterate 1000 --localpair --reorder "${input_path}/${input_file}" > "${input_path}/${input_file}.aligned"
-    cat "${input_path}/${input_file}.aligned" > "${input_path}/${input_file}"
-    rm "${input_path}/${input_file}.aligned"
+    mafft --maxiterate 1000 --localpair --reorder "$INPUT_FASTA" > "${INPUT_FASTA}.aligned"
+    cat "${INPUT_FASTA}.aligned" > "$INPUT_FASTA"
+    rm "${INPUT_FASTA}.aligned"
 else
     echo "File is already an alignment. No action taken."
 fi
@@ -40,7 +47,7 @@ fi
 protein_database_directory="/work/pi_lfritzlaylin_umass_edu/users/jaman/sequence_databases/myo2_seqs_collect_v1/full_genomes_peptide_databases"
 
 #define the run directory 
-run_dir="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/results_${input_name}"
+run_dir="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/results_${run_name}"
 mkdir ${run_dir}
 
 
@@ -55,10 +62,11 @@ collected_seqs_file="${hmm_search_dir}/${run_name}_collected_seqs.fa"
 collected_IDs_file="${hmm_search_dir}/${run_name}_collected_IDs.txt"
 touch "${collected_seqs_file}"
 touch "${collected_IDs_file}"
+number_results_to_collect=10# define the number of results from each protein database to collect
 
 #Create the HMM for the input
 hmmbuild_file="${hmm_search_dir}/${run_name}.hmm"
-hmmbuild "${hmmbuild_file}" "${input_path}/${input_file}"
+hmmbuild "${hmmbuild_file}" "${INPUT_FASTA}"
 
 #loop here through each protein database file and perform the search and sequence collection
 for file_path in "${protein_database_directory}"/*_protein.faa; do #Set the current protein genome being searched

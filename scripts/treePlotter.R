@@ -1,4 +1,4 @@
-treePlotter <- function(tree_file, outgroupID = NULL, label_size = 1) {
+treePlotter <- function(tree_file, outgroupID = NULL, label_size = .5) {
   # Read the Newick tree
   tree <- read.tree(tree_file)
   
@@ -9,13 +9,13 @@ treePlotter <- function(tree_file, outgroupID = NULL, label_size = 1) {
   }
   
   # Plot the tree using ggtree
-  p_tree <- ggtree(tree, layout = "rectangular") + 
+  p_tree <- ggtree(tree, layout = "rectangular", size = .1) + 
     geom_tiplab(aes(label = label), 
-                align = TRUE, linesize = 0.5, size = label_size, offset = 1) +  # Increase label size and adjust horizontal justification
-    theme_tree2() +   # Apply a tree theme
-    geom_text2(aes(label = node), hjust = -0.3, vjust = 0.5, size = label_size * 0.7, color = "blue") + # Apply node labels
-    geom_text2(aes(label = ifelse(isTip, NA, label)), hjust = -0.3, vjust = -0.5, size = label_size * 0.7, color = "red") + # Apply node bootstrap support
-    xlim(NA, 14) # Adjust plot margins, increase right margin
+                align = TRUE,linetype = "dotted", linesize = 0.2, size = label_size, offset = 0.1) +  # Increase label size and adjust horizontal justification
+    #theme_tree2() +   # Apply a tree theme
+    geom_text2(aes(label = node), hjust = -01.3, vjust = 0.5, size = label_size * 0.7, color = "blue") + # Apply node number labels
+    geom_text2(aes(label = ifelse(isTip, NA, label)), hjust = -0.3, vjust = 0.5, size = label_size * 0.7, color = "red") + # Apply node bootstrap support
+    xlim(NA, 10) # Adjust plot margins, increase right margin
   
   # Print the tree plot
   print(p_tree)

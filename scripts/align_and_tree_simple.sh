@@ -1,9 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=gpu-long         # Select partition
-#SBATCH --gpus=1                     # Request 1 GPU
-#SBATCH --cpus-per-gpu=16            # 16 CPU cores per GPU
-#SBATCH --mem-per-gpu=20G            # 20 GB memory per GPU
-#SBATCH -t 8:00:00
+#SBATCH --partition=cpu-long        # Partition to use
+#SBATCH --nodes=1                   # Number of nodes
+#SBATCH --ntasks=1                  # Number of tasks (processes)
+#SBATCH --cpus-per-task=128           # Number of CPU cores per task
+#SBATCH --mem=120G                   # Memory per node
+SBATCH -t 12:00:00
 #SBATCH -o /home/jaman_umass_edu/jaman/Myo2_phylogeny/results_Amoebozoan_MyoII_motors/refine1/slurm-%j.out
 #SBATCH -e /home/jaman_umass_edu/jaman/Myo2_phylogeny/results_Amoebozoan_MyoII_motors/refine1/slurm-%j.err
 
@@ -71,7 +72,7 @@ cd ${tree_dir}
 	iqtree2 -s ${tree_dir}/${aligned_file_name} -m Q.yeast+R7 -bb 1000 -bnni -nt AUTO  #full version, force Q.yeast+R7 model because Modelfinder keeps deciding on this one
 	
 #remove iqtree log files
-cd ${tree_dir} when 
+cd ${tree_dir} 
 echo "cleaning up.."
 	rm *splits.nex
 	rm *ckp.gz

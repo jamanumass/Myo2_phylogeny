@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=cpu-long        # Partition to use
+#SBATCH --partition=cpu        # Partition to use
 #SBATCH --nodes=1                   # Number of nodes
 #SBATCH --ntasks=1                  # Number of tasks (processes)
 #SBATCH --cpus-per-task=32           # Number of CPU cores per task
 #SBATCH --mem=120G                   # Memory per node
-SBATCH -t 4:00:00
+SBATCH -t 04:00:00
 #SBATCH -o slurm-%j.out
 #SBATCH -e slurm-%j.err
 
@@ -25,9 +25,7 @@ fi
 source $output_var_file
 
 
-# Make a new folder to contain the results from the domain extraction process
-extraction_dir="${run_dir}/domain_extraction_result"
-mkdir -p $extraction_dir
+
 
 
 ##this section to pull previously made HMM files to extract the portion of results fitting the HMM
@@ -36,31 +34,25 @@ domain_hmm_dir="/work/pi_lfritzlaylin_umass_edu/users/jaman/Pfam_HMMs"
 domain_hmm_file_name="myosin_head_motor_domain.hmm"
 domain_hmm_file="${domain_hmm_dir}/${domain_hmm_file_name}"
 
-# Extract the collected seqs and HMM base names without the directories
-collected_seqs_base=$(basename "$collected_seqs_file" .fa)
-domain_hmm_base=$(basename "$domain_hmm_file" .hmm)
+# name of the HMM with the domain to be used
+domain_hmm_base_name=$(basename "$domain_hmm_file" .hmm)
 
 # Define the output file
-extraction_output_file="$extraction_dir/${collected_seqs_base}_${domain_hmm_base}_extraction.fa"
+domain_table_file="$domain_extraction_dir/${run_name}_${domain_hmm_base_name}.domtblout"
 
 #1 - Generate a domain table with the target of each hit identified in its sequence
 #Run hmmsearch and extract the sequences
-hmmsearch --domtblout "${extraction_output_file}.domtblout" "$domain_hmm_file" "$collected_seqs_file"
-#debug: how many hits found. Should be about 5x the number of genomes
-echo "number of lines in HMMsearch domain results"
-cat ${extraction_output_file}.domtblout | wc -l
-
+hmmsearch --domtblout ${domain_table_file} --noali ${domain_hmm_file} ${collected_seqs_file}
 
 #2 Generate a simplified output file of the domain coordinates
 #Define the simplified output file
-simplified_output_file="${extraction_output_file}.simplified"
+simplified_output_file="${domain_table_file}.simplified"
 
 # Process the domain table to extract columns 1 (target name), 20 (env from), and 21 (env to) to make simplified table
-awk '$1 !~ /^#/ { print $1, $20, $21 }' "${extraction_output_file}.domtblout" > "$simplified_output_file"
+awk '$1 !~ /^#/ { print $1, $20, $21 }' ${domain_table_file} > ${simplified_output_file}
 #debug count the number of lines in the simplified table
 echo "Number of lines in the simplified domain table:"
 cat $simplified_output_file | wc -l
-
 
 #3 Merge any domains that came from the same gene into one coordinate set
 #Define the merged output file
@@ -83,9 +75,6 @@ END {
     }
 }' "$simplified_output_file" > "$merged_output_file"
 
-# Debug: Check the contents of the merged file
-echo "number of lines in the gene-merged table"
-cat "$merged_output_file" | wc -l
 
 
 #4 calculate and write the lengths of each sequence
@@ -95,9 +84,6 @@ length_output_file="${merged_output_file}.length"
 # Add the length as the 4th column
 awk '{ print $1, $2, $3, $3 - $2 + 1 }' "$merged_output_file" > "$length_output_file"
 
-# Debug: Check the contents of the length file
-echo "Contents of length_output_file: [geneID] [domain start] [domain end] [length]"
-head -n 2 "$length_output_file"
 
 
 #5 Remove sequences outside of length parameters to produce a filtered list of sequences
@@ -131,11 +117,10 @@ cat $filtered_output_file | wc -l
 
 
 
-
 #6 Extract the portion of sequences defined by the domains
 # Define the final fasta output file
-hits_domain_extraction_file="${extraction_dir}/${input_name}_hits_domain_extraction.fa"
-touch $hits_domain_extraction_file
+extracted_domains_fasta_file="${domain_extraction_dir}/${run_name}_${domain_hmm_base_name}_extraction.fasta"
+touch $extracted_domains_fasta_file
 
 # Extract and trim sequences based on the filtered file
 while read -r seqid start end length; do
@@ -155,12 +140,15 @@ while read -r seqid start end length; do
             print substr(seq, start, end - start + 1)
         }
     }
-    ' "$collected_seqs_file" >> "$hits_domain_extraction_file"
+    ' "$collected_seqs_file" >> "$extracted_domains_fasta_file"
 done < "$filtered_output_file"
-
-
 
 # Cleanup intermediate files
 rm "$simplified_output_file" "$merged_output_file" "$length_output_file" "$filtered_output_file"
 
+# Report 
+echo "number of lines in the domain-extraction collected seqs file, should be 2X the number in the filtered output file:"
+cat ${extracted_domains_fasta_file} | wc -l
 
+# Append the following variables to the job_variables.txt file for downstream scripts to use
+echo "extracted_domains_fasta_file=${extracted_domains_fasta_file}" >> ${output_var_file}

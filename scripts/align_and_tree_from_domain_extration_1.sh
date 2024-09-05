@@ -1,11 +1,12 @@
 #!/bin/bash
-#SBATCH --partition=gpu-long         # Select partition
-#SBATCH --gpus=1                     # Request 1 GPU
-#SBATCH --cpus-per-gpu=16            # 16 CPU cores per GPU
-#SBATCH --mem-per-gpu=20G            # 20 GB memory per GPU
-#SBATCH -t 8:00:00
-#SBATCH -o /work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/results_MyoI_motors/tree_results/slurm-%j.out
-#SBATCH -e /work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/results_MyoI_motors/tree_results/slurm-%j.err
+#SBATCH --partition=cpu-long        # Partition to use
+#SBATCH --nodes=1                   # Number of nodes
+#SBATCH --ntasks=1                  # Number of tasks (processes)
+#SBATCH --cpus-per-task=32           # Number of CPU cores per task
+#SBATCH --mem=120G                   # Memory per node
+SBATCH -t 4:00:00
+#SBATCH -o slurm-%j.out
+#SBATCH -e slurm-%j.err
 
 
 #This script takes the extracted domains from the HMM search hits, and build a phylogenetic tree
