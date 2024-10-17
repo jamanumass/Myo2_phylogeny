@@ -27,7 +27,7 @@ source $output_var_file
 	# output_from_previous_step=${collected_seqs_file} # If coming directly from the HMMsearch result
 	
 # copy the data from previous step output to the tree directory and rename
-starting_data_file="${tree_inference_dir}/${run_name}_starting_data.fasta"	#define the new file name
+starting_data_file="${tree_inference_dir}/${run_name}_starting_data.fasta"
 cp ${output_from_previous_step} ${starting_data_file}
 echo "Input sequences to be used are copied from ${output_from_previous_step}"
 echo "New file created in this directory with starting data, named ${starting_data_file}"
@@ -80,7 +80,8 @@ fi
 echo "Running Noisy"
 if [ "$run_noisy" = true ]; then
     # Clean alignment with noisy
-    ~/noisy/bin/noisy $starting_data_cleaned_aligned_file #Output MSA from noisy is basename(input) + _out.fas  No way to alter this in the arguments.
+    cd "${tree_inference_dir}"
+    ~/noisy/bin/noisy "${starting_data_cleaned_aligned_file}" #Output MSA from noisy is basename(input) + _out.fas  No way to alter this in the arguments.
     starting_data_cleaned_aligned_noisyed_file="${starting_data_cleaned_aligned_file%.fasta}_out.fas"  # Should be the output from noisy
     echo "Noisy finished. Result is ${starting_data_cleaned_aligned_noisyed_file}"
 else

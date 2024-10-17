@@ -2,7 +2,7 @@
 
 # Set the parameters
 hmm_score_threshold=825  # Set the HMM score threshold 
-number_results_to_collect=10  # Alternatively, define a set number of results from each protein database to collect.
+number_results_to_collect=4  # Alternatively, define a set number of results from each protein database to collect.
 use_hmm_score_threshold="false"
 
 
@@ -63,8 +63,9 @@ echo "use_hmm_score_threshold=${use_hmm_score_threshold}" >> "${output_var_file}
 
 # Explicitly export the output_var_file variable for the downstream scripts
 export output_var_file
-
+# -----------------------------------------
 #### DOWNSTREAM SCRIPT 1 - Search ####
+# -----------------------------------------
 
 # Submit the HMMER_search_v2.sh script
 HMMER_script="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/scripts/HMMER_search_v3.sh"
@@ -93,8 +94,9 @@ echo "Search job submitted with Job ID: $job1_id"
 
 
 
-
+# -----------------------------------------
 #### DOWNSTREAM SCRIPT 2 - Domain Extraction ####
+# -----------------------------------------
 
 # Submit the extract_motor_domain_v2.sh script only after the first job (job1) completes
 extract_single_domain_script="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/scripts/extract_motor_domain_v2.sh"  # Path to extract_motor_domain_v2.sh
@@ -123,8 +125,9 @@ echo "Extract motor domain job submitted with Job ID: $job2_id"
 
 
 
-
+# -----------------------------------------
 #### DOWNSTREAM SCRIPT 3 - Tree Inference ####
+# -----------------------------------------
 
 # Submit the tree inference script only after job2 completes
 tree_inference_script="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/scripts/tree_infer_2.sh"  # Path to tree inference script
