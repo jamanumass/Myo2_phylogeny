@@ -1,17 +1,24 @@
 #!/bin/bash
 
-# Set the parameters
-hmm_score_threshold=825  # Set the HMM score threshold 
-number_results_to_collect=4  # Alternatively, define a set number of results from each protein database to collect.
-use_hmm_score_threshold="false"
+# Set the HMM search parameters
+hmm_score_threshold=1070  # Set the HMM score threshold 
+number_results_to_collect=3  # Alternatively, define a set number of results from each protein database to collect.
+use_hmm_score_threshold="true"
 
-
-INPUT_FASTA="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/input_seqs/pedros_1F_input.fasta"  # Set your input FASTA file here
-#NUM_CORES=20  # Set this variable as needed to dynamically control the number of cores requested
+INPUT_FASTA="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/input_seqs/Myo2_Pedro_input.fasta"  # Set your input FASTA file here
 NUM_CORES=16  # Set this variable as needed to dynamically control the number of cores requested
 
-# Location of permanent protein databases
-protein_database_directory="/work/pi_lfritzlaylin_umass_edu/users/jaman/sequence_databases/myo2_seqs_collect_v1/full_genomes_peptide_databases"
+    # Set the sequence database directories
+    PROTEIN_DB_OPTION="all" # Select protein databases. Set this variable to 1, 2, or "all"
+    # Select directories based on PROTEIN_DB_OPTION
+    db1="/home/jaman_umass_edu/jaman/sequence_databases/proteins/ncbi"     # Database 1: NCBI
+    db2="/home/jaman_umass_edu/jaman/sequence_databases/proteins/Eukprot"  # Database 2: Eukprot
+    
+    database_dirs=()
+    [ "$PROTEIN_DB_OPTION" = "1" ] && database_dirs=("$db1")
+    [ "$PROTEIN_DB_OPTION" = "2" ] && database_dirs=("$db2")
+    [ "$PROTEIN_DB_OPTION" = "all" ] && database_dirs=("$db1" "$db2")
+
 
 # Location of project directories
 root_dir="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny"
@@ -41,6 +48,7 @@ while [ -d "$run_dir" ]; do
     fi
     run_name="${run_name}_${suffix}"  # Update run_name with new suffix
     run_dir="${results_dir}/results_${run_name}"  # Update run_dir with new run_name
+    echo "This run will be housed in the results subdirectory named ${run_name}"
 done
 
 # Create the unique run directory
@@ -55,7 +63,7 @@ echo "number_results_to_collect=${number_results_to_collect}" >> ${output_var_fi
 echo "run_name=${run_name}" >> ${output_var_file}
 echo "run_dir=${run_dir}" >> ${output_var_file}
 echo "results_dir=${results_dir}" >> ${output_var_file}
-echo "protein_database_directory=${protein_database_directory}" >> ${output_var_file}
+echo "database_dirs=${database_dirs}" >> "${output_var_file}"
 echo "NUM_CORES=${NUM_CORES}" >> ${output_var_file}
 echo "hmm_score_threshold=${hmm_score_threshold}" >> ${output_var_file}
 echo "use_hmm_score_threshold=${use_hmm_score_threshold}" >> "${output_var_file}"
@@ -130,7 +138,7 @@ echo "Extract motor domain job submitted with Job ID: $job2_id"
 # -----------------------------------------
 
 # Submit the tree inference script only after job2 completes
-tree_inference_script="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/scripts/tree_infer_2.sh"  # Path to tree inference script
+tree_inference_script="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/scripts/tree_infer_3.sh"  # Path to tree inference script
 
 # Define the directory for tree inference results
 tree_inference_dir="${run_dir}/tree_inference_result"

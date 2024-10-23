@@ -10,7 +10,7 @@
 
 # Load required modules
 module load iq-tree/2.1.3-noMPI 
-module load mafft/7.481
+module load MAFFT/7.505-GCC-11.3.0-with-extensions
 
 run_noisy=true  # or run_noisy=1
 
@@ -81,7 +81,7 @@ echo "Running Noisy"
 if [ "$run_noisy" = true ]; then
     # Clean alignment with noisy
     cd "${tree_inference_dir}"
-    ~/noisy/bin/noisy "${starting_data_cleaned_aligned_file}" #Output MSA from noisy is basename(input) + _out.fas  No way to alter this in the arguments.
+    noisy "${starting_data_cleaned_aligned_file}" #Output MSA from noisy is basename(input) + _out.fas  No way to alter this in the arguments.
     starting_data_cleaned_aligned_noisyed_file="${starting_data_cleaned_aligned_file%.fasta}_out.fas"  # Should be the output from noisy
     echo "Noisy finished. Result is ${starting_data_cleaned_aligned_noisyed_file}"
 else
@@ -98,17 +98,5 @@ echo "Starting IQtree inference using ${starting_data_cleaned_aligned_noisyed_fi
 #	iqtree2 -s ${tree_input_clean_file} -fast -m LG+F+R7 -B 1000 --wbtl -nstop 500 #quick version
 #	iqtree2 -s ${tree_input_clean_file} -m MFP -bb 1000 -bnni -o $outgroup_name #full version, infer site rates
 #	iqtree2 -s ${tree_input_clean_file} -m Q.yeast+R7 -bb 1000 -bnni -nt ${NUM_CORES} -o $outgroup_name  #full version, force Q.yeast+R7 model because Modelfinder keeps deciding on this one
-	iqtree2 -s ${starting_data_cleaned_aligned_noisyed_file} -m Q.yeast+R7 -bb 1000 -bnni -nt AUTO -o $outgroup_name  #full version, force Q.yeast+R7 model because Modelfinder keeps deciding on this one
+	iqtree2 -s ${starting_data_cleaned_aligned_noisyed_file} -m Q.yeast+R7 -bb 1000 -bnni -nt AUTO -o $outgroup_name  # force Q.yeast+R7 model because Modelfinder keeps deciding on this one
 echo "Finished IQtree program"
-
-#remove iqtree log files
-cd ${tree_dir}
-echo "cleaning up.."
-	rm *splits.nex
-	rm *ckp.gz
-	rm *bionj
-	rm *mldist
-#	rm *.log
-	rm *.iqtree
-	rm *model.gz
-	rm *uniqueseq.phy

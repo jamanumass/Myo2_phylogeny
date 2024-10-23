@@ -14,8 +14,8 @@ treePlotter <- function(tree_file, outgroupID = NULL, label_size = .5 ) {
     geom_tiplab(aes(label = label), 
                 align = FALSE ,linetype = "dotted", linesize = 0.2, size = label_size, offset = 0.1) +  # Increase label size and adjust horizontal justification
     #theme_tree2() +   # Apply a tree theme
-    geom_text2(aes(label = node), hjust = -01.3, vjust = 0.5, size = label_size * 0.7, color = "blue") + # Apply node number labels
-    geom_text2(aes(label = ifelse(isTip, NA, label)), hjust = -0.3, vjust = 0.5, size = label_size * 0.7, color = "red")# + # Apply node bootstrap support
+    geom_text2(aes(label = node), hjust = -01.6, vjust = 0.5, size = label_size * 0.7, color = "blue") + # Apply node number labels
+    geom_text2(aes(label = ifelse(isTip, NA, label)), hjust = -0.4, vjust = 0.5, size = label_size * 0.7, color = "red")# + # Apply node bootstrap support
    #xlim(NA, 3) # Adjust plot margins, increase right margin
   
   # Print the tree plot

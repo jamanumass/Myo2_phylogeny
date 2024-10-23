@@ -6,7 +6,6 @@ library(ggpubr)
 library(cowplot)
 
 
-
 # Source the tools
 source("~/jaman/Myo2_phylogeny/scripts/treePlotterTools.R")
 
@@ -14,7 +13,7 @@ source("~/jaman/Myo2_phylogeny/scripts/treePlotterTools.R")
 outgroupID <- "Bnat_34821_MyoIV"
 
 # Set the run and tree results directory
-run_name <- "results_myo1s_2"
+run_name <- "pedros_1f_my_2s"
 results_dir <- "/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/results"
 run_dir <- file.path(results_dir, run_name)
 hmm_search_dir <- file.path(run_dir, "hmm_search_results")

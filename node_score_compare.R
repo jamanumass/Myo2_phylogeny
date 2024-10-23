@@ -4,10 +4,12 @@
 # Load necessary libraries
 library(dplyr)
 library(ggplot2)
+library(ape)
+
 
 # Set the run and tree results directory
-run_name <- "results_myo1s_2"
-node <- 223  # Example node to collect from (can be modified)
+run_name <- "results_Myo2_Pedro"
+node <- 92  # Example node to collect from (can be modified)
 
 # Define the universal variables
 results_dir <- "/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/results"
@@ -22,8 +24,10 @@ if (length(tree_files) != 1) {
 }
 tree_file <- tree_files[1]  # Use the first (and only) tree file
 
-# Function to read scores from a hmmsearch result file
-read_hmm_scores <- function(hmm_file, gene_ids_selected) {
+
+
+# Function to read scores from a hmmsearch result file and map them to specific genes
+read_hmm_scores <- function(hmm_file, gene_ids_selected, gene_ids_outside) {
   # Read the lines of the file
   lines <- readLines(hmm_file)
   
@@ -46,33 +50,51 @@ read_hmm_scores <- function(hmm_file, gene_ids_selected) {
   hmm_gene_ids <- as.character(hmm_data[, col_gene_id])
   hmm_scores <- as.numeric(hmm_data[, col_score])
   
-  # Identify selected and non-selected gene scores
+  # Map scores to their respective genes
   selected_scores <- hmm_scores[hmm_gene_ids %in% gene_ids_selected]
-  non_selected_scores <- hmm_scores[!hmm_gene_ids %in% gene_ids_selected]
+  non_selected_scores <- hmm_scores[hmm_gene_ids %in% gene_ids_outside]
   
-  return(list(selected = selected_scores, non_selected = non_selected_scores))
+  # Return lists of genes with their corresponding scores
+  return(list(
+    selected = selected_scores, 
+    non_selected = non_selected_scores
+  ))
 }
 
-# Main function to extract and compare HMM search scores
-compare_hmm_scores <- function(tree_file, node, hmm_dir) {
+# Function to calculate and print statistics
+print_stats <- function(scores_list) {
+  if (length(scores_list) > 0) {
+    scores <- as.numeric(scores_list)
+    message("Number of genes: ", length(scores))
+    message("Min: ", min(scores, na.rm = TRUE))
+    message("Max: ", max(scores, na.rm = TRUE))
+    message("Median: ", median(scores, na.rm = TRUE))
+    message("Mean: ", mean(scores, na.rm = TRUE))
+  } else {
+    message("No scores available.")
+  }
+}
+
+# Main function to extract and compare HMM search scores and print only the stats
+get_hmm_scores_for_node <- function(tree_file, node, hmm_dir) {
   
-  # Load the tree
+  # Load the tree and extract gene IDs from the entire tree and from the node
   tree <- read.tree(tree_file)
+  all_gene_ids <- gsub("([A-Z0-9]+\\.[0-9]+)_.*", "\\1", tree$tip.label)
+  genes_in_node <- gsub("([A-Z0-9]+\\.[0-9]+)_.*", "\\1", extract.clade(tree, node)$tip.label)
+  genes_outside_node <- setdiff(all_gene_ids, genes_in_node)
   
-  # Extract gene IDs from the selected node
-  collected_from_node_raw <- extract.clade(tree, node)$tip.label
-  gene_ids_selected <- gsub("([A-Z0-9]+\\.[0-9]+)_.*", "\\1", collected_from_node_raw)
-  
-  # Debug: Print the selected gene IDs
-  message("Selected node gene IDs: ", paste(gene_ids_selected, collapse = ", "))
-  
-  # Get the directories that start with 'search_results_'
-  subdirs <- list.dirs(hmm_dir, recursive = TRUE, full.names = TRUE)
-  search_dirs <- subdirs[grepl("search_results_", basename(subdirs))]
+  # Debug: Print the selected gene IDs for verification
+  message("Selected node gene IDs: ", length(genes_in_node))
+  message("Genes outside node: ", length(genes_outside_node))
   
   # Initialize lists to store all selected and non-selected scores
   all_selected_scores <- numeric(0)
   all_non_selected_scores <- numeric(0)
+  
+  # Get the directories that start with 'search_results_'
+  subdirs <- list.dirs(hmm_dir, recursive = TRUE, full.names = TRUE)
+  search_dirs <- subdirs[grepl("search_results_", basename(subdirs))]
   
   # Loop through each directory
   for (search_dir in search_dirs) {
@@ -83,7 +105,7 @@ compare_hmm_scores <- function(tree_file, node, hmm_dir) {
     # Loop through each hmmsearch result file
     for (hmm_file in hmm_files) {
       # Read and extract the scores from the hmmsearch file
-      hmm_scores <- read_hmm_scores(hmm_file, gene_ids_selected)
+      hmm_scores <- read_hmm_scores(hmm_file, genes_in_node, genes_outside_node)
       
       # Append the scores to the corresponding lists
       all_selected_scores <- c(all_selected_scores, hmm_scores$selected)
@@ -91,22 +113,13 @@ compare_hmm_scores <- function(tree_file, node, hmm_dir) {
     }
   }
   
-  # Combine selected and non-selected scores into one data frame
-  if (length(all_selected_scores) > 0 | length(all_non_selected_scores) > 0) {
-    selected_df <- data.frame(score = all_selected_scores, category = "Selected")
-    non_selected_df <- data.frame(score = all_non_selected_scores, category = "Non-selected")
-    combined_df <- rbind(selected_df, non_selected_df)
-    
-    # Plot histograms for both selected and non-selected gene scores using ggplot2
-    ggplot(combined_df, aes(x = score, fill = category)) +
-      geom_histogram(binwidth = 10, position = "identity", alpha = 0.6, color = "black") +
-      scale_fill_manual(values = c("Selected" = "blue", "Non-selected" = "red")) +
-      labs(title = "Histogram of Selected and Non-selected Gene Scores", x = "Score", y = "Frequency") +
-      theme_minimal()
-  } else {
-    message("No scores found for selected or non-selected node genes.")
-  }
+  # Print the stats for both groups
+  message("\nStatistics for genes in the node:")
+  print_stats(all_selected_scores)
+  
+  message("\nStatistics for genes outside the node:")
+  print_stats(all_non_selected_scores)
 }
 
-# Call the main function with the defined variables
-compare_hmm_scores(tree_file, node, hmm_search_dir)
+# Call the function with the defined variables
+get_hmm_scores_for_node(tree_file, node, hmm_search_dir)

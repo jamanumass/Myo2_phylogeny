@@ -10,7 +10,7 @@
 
 module load uri/main
 module load HMMER/3.3.2-iimpi-2021b
-module load mafft/7.481
+module load MAFFT/7.505-GCC-11.3.0-with-extensions
 
 # 1. Source the variable file to load all variables into the environment
 if [ -f "$output_var_file" ]; then
@@ -53,65 +53,59 @@ collected_IDs_file="${hmm_search_results_dir}/${run_name}_collected_IDs.txt"
 touch "${collected_seqs_file}"
 
 
-# 5. Loop through each protein database file and perform the search
-
+# 5. Loop through each database file and perform the search
 echo "Searching each genome database using HMM..."
-for file_path in "${protein_database_directory}/"*.fasta "${protein_database_directory}/"*_protein.faa; do # This accomodates both NCBI and eukprot database file names
-    protein_database_file=$(basename "$file_path")
-    protein_database_name="${protein_database_file%_protein.faa}"
-
-    # Make a directory for the current genome's search results
-    current_species_search_results_dir="${hmm_search_results_dir}/search_results_${protein_database_name}"
-    mkdir -p ${current_species_search_results_dir}
-
-    # Perform the HMM search
-    hmmsearch_hits_file="${current_species_search_results_dir}/${run_name}_in_${protein_database_name}_hmmsearch_out.txt"
-    hmmsearch --tblout "${hmmsearch_hits_file}" --cpu ${NUM_CORES} --noali "${hmmbuild_file}" "${file_path}"
-
-    # Filter results based on either the HMM score threshold or total number of hits
-    thresholded_IDs_file="${current_species_search_results_dir}/${protein_database_name}_thresholded_IDs.txt"
-    if [ "$use_hmm_score_threshold" = true ]; then
-        # Use hmm_score_threshold to filter hits
-        grep -v '^#' ${hmmsearch_hits_file} | awk -v threshold=${hmm_score_threshold} '$6 >= threshold {print $1}' > ${thresholded_IDs_file}
-    elif [ "$use_hmm_score_threshold" = false ]; then
-        # Use number_results_to_collect to get top N hits
-        grep -v '^#' ${hmmsearch_hits_file} | head -n ${number_results_to_collect} | awk '{print $1}' > ${thresholded_IDs_file}
-    else
-        echo "Error: Invalid value for use_hmm_score_threshold. Must be true or false."
-        exit 1
-    fi
-
-    # Add the filtered hits gene IDs to the run's collected IDs file
-    cat ${thresholded_IDs_file} >> ${collected_IDs_file}
+# Loop through each  database directory and search
+for dir in "${database_dirs[@]}"; do # Allows more than 1 database set, see main caller script
+    for file_path in "${dir}/"*.fasta "${dir}/"*_protein.faa; do
+        # Extract the protein database file name and the base name without extension
+        protein_database_file=$(basename "$file_path")
+        protein_database_name="${protein_database_file%_protein.faa}"
     
-    # Extract the fasta sequences of the filtered hits
-    thresholded_seqs_file="${current_species_search_results_dir}/${protein_database_name}_thresholded_seqs.fasta"
-    touch $thresholded_seqs_file
+        # Make a directory for the current genome's search results
+        current_species_search_results_dir="${hmm_search_results_dir}/search_results_${protein_database_name}"
+        mkdir -p ${current_species_search_results_dir}
     
-    # Collect the sequences from the thresholded_IDs_file
-    while IFS= read -r gene_id; do
-        awk -v id="$gene_id" '
-        BEGIN { found=0 }
-        $0 ~ ">" && $0 ~ id { found=1; print; next }
-        found && /^>/ { found=0 }
-        found { print }
-        ' "$file_path" >> "${thresholded_seqs_file}"
-    done < "${thresholded_IDs_file}"
+        # Perform the HMM search
+        hmmsearch_hits_file="${current_species_search_results_dir}/${run_name}_in_${protein_database_name}_hmmsearch_out.txt"
+        hmmsearch --tblout "${hmmsearch_hits_file}" --cpu ${NUM_CORES} --noali "${hmmbuild_file}" "${file_path}"
     
-    # Append these sequences to the overall collected sequences file
-    cat ${thresholded_seqs_file} >> ${collected_seqs_file}
-
+        # Filter results based on either the HMM score threshold or total number of hits
+        thresholded_IDs_file="${current_species_search_results_dir}/${protein_database_name}_thresholded_IDs.txt"
+        if [ "$use_hmm_score_threshold" = true ]; then
+            # Use hmm_score_threshold to filter hits
+            grep -v '^#' ${hmmsearch_hits_file} | awk -v threshold=${hmm_score_threshold} '$6 >= threshold {print $1}' > ${thresholded_IDs_file}
+        elif [ "$use_hmm_score_threshold" = false ]; then
+            # Use number_results_to_collect to get top N hits
+            grep -v '^#' ${hmmsearch_hits_file} | head -n ${number_results_to_collect} | awk '{print $1}' > ${thresholded_IDs_file}
+        else
+            echo "Error: Invalid value for use_hmm_score_threshold. Must be true or false."
+            exit 1
+        fi
+    
+        # Add the filtered hits gene IDs to the run's collected IDs file
+        cat ${thresholded_IDs_file} >> ${collected_IDs_file}
+        
+        # Extract the fasta sequences of the filtered hits
+        thresholded_seqs_file="${current_species_search_results_dir}/${protein_database_name}_thresholded_seqs.fasta"
+        touch $thresholded_seqs_file
+        
+        # Collect the sequences from the thresholded_IDs_file
+        while IFS= read -r gene_id; do
+            awk -v id="$gene_id" '
+            BEGIN { found=0 }
+            $0 ~ ">" && $0 ~ id { found=1; print; next }
+            found && /^>/ { found=0 }
+            found { print }
+            ' "$file_path" >> "${thresholded_seqs_file}"
+        done < "${thresholded_IDs_file}"
+        
+        # Append these sequences to the overall collected sequences file
+        cat ${thresholded_seqs_file} >> ${collected_seqs_file}
+    done
 done
 
 
-#New - remove duplicates from the same species.
-deduplicate_script="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/scripts/deduplicate_fasta.sh"
-threshold=94
-deduped_temp_file="${collected_seqs_file}_dedupe.temp"
-"$deduplicate_script" "${collected_seqs_file}" "$threshold" "$deduped_temp_file" # Run the script
-mv "$deduped_temp_file" "${collected_seqs_file}" # Replace the original file with the deduplicated version
-rm "$deduped_temp_file"
-echo "Deduplication of results completed"
 
 # Append HMMER-specific variables to the job variables file
 echo "collected_seqs_file=${collected_seqs_file}" >> ${output_var_file}
