@@ -12,7 +12,8 @@ source("~/jaman/Myo2_phylogeny/scripts/exon_mapper.R")
 # Source the treePlotterWithExonMaps.R script to load the tree plotting functions
 source("~/jaman/Myo2_phylogeny/scripts/treePlotterWithExonMaps.R")
 
-tree_file <- "/home/jaman_umass_edu/jaman/Myo2_phylogeny/results_Amoebozoan_MyoII_motors/refine1/tree_results/refined1_all_seqs_input.fasta_cleanNames.fa_aligned.fasta.contree" # Specify the tree file and its full path
+# Specify the tree file and outgroup
+tree_file <- "/home/jaman_umass_edu/jaman/Myo2_phylogeny/results/results_Amoe_MyoII_motors/tree_inference_result/Amoe_MyoII_motors_input_clean_out.fas.contree" 
 outgroupID <- "XP_641363.1_myosin_IA_heavy_chain_Dictyostelium_discoideum_AX4"
 
 ## Exon data - generate
@@ -35,10 +36,6 @@ treePlotter(tree_file, outgroupID, label_size = 1)
 
 
 # Extract gene IDs from a branch of the tree
-node_to_collect <- 170 # This will be printed on the tree nodes from treePlotter
+node_to_collect <- 291 # This will be printed on the tree nodes from treePlotter
 save_gene_IDs_from_node(tree_file, node_to_collect, format = "txt")
 
-# Extract gene IDs from a branch of the tree
-tree_file <- "~/path_to_tree/treefile.newick" # Specify the tree file and its full path
-node_to_collect <- 132 # This will be printed on the tree nodes from treePlotter
-save_gene_IDs_from_node(tree_file, node_to_collect, format = "txt")
