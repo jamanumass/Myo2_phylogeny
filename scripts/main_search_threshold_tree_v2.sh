@@ -11,21 +11,21 @@ run_step_3=true    # Step 3: Tree Inference
 # =======================================================
 # GENERAL PARAMETERS AND PATHS
 # =======================================================
-hmm_score_threshold=1000
+hmm_score_threshold=900
 num_top_hmm_hits_per_genome=3
 use_hmm_score_threshold="true"
-INPUT_FASTA="/home/jaman_umass_edu/jaman/Myo2_phylogeny/results/sup_figure_run_4/input_parts/sup_figure_run_4_input.fasta" #must end in "_input.fasta"
+INPUT_FASTA="/work/pi_lfritzlaylin_umass_edu/users/jaman/Myo2_phylogeny/results/sup_figure_run_6/input_parts/sup_figure_run_6_input.fasta"
 NUM_CORES=16
 
 # Specify the previous run directory if reusing data from a previous run
 # Leave as an empty string "" to create a new run
-PREVIOUS_RUN_DIR="/home/jaman_umass_edu/jaman/Myo2_phylogeny/results/sup_figure_run_4"
+PREVIOUS_RUN_DIR="/home/jaman_umass_edu/jaman/Myo2_phylogeny/results/sup_figure_run_6"
 #PREVIOUS_RUN_DIR=""
 # =======================================================
 # DATABASE SELECTION: Define Directories for Protein Databases
 # =======================================================
 PROTEIN_DB_OPTION="all"
-db1="/home/jaman_umass_edu/jaman/sequence_databases/proteins/ncbi"
+db1="/home/jaman_umass_edu/jaman/sequence_databases/proteins/Uniprot"
 db2="/home/jaman_umass_edu/jaman/sequence_databases/proteins/Eukprot"
 database_dirs=()
 [ "$PROTEIN_DB_OPTION" = "1" ] && database_dirs=("$db1")

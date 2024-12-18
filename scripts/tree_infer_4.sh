@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=60G
-#SBATCH --time=14:00:00
+#SBATCH --time=24:00:00
 #SBATCH --output=slurm-%j.out
 #SBATCH --error=slurm-%j.err
 
@@ -47,6 +47,10 @@ fi
 
 # Copy the selected starting file to the tree inference directory
 cp "$starting_data" "$input1_seqs"
+echo "Starting from file: $starting_data"
+echo "starting data file has $(grep -c ">" $starting_data) sequences"
+echo "Copying to input1 file $input1_seqs"
+echo "Genes in the input file: $(grep -c ">" $input1_seqs)"
 
 # ==============================
 # Cleanup Gene Names and Sequences
@@ -58,7 +62,8 @@ if [ ! -f "$input2_cleaned_seqs" ]; then
         echo "Error: Gene name and sequence cleanup failed."
         exit 1
     fi
-    echo "Gene name and sequence cleanup complete: $input2_cleaned_seqs"
+    echo "Gene name and sequence cleanup complete: Genes in the cleaned file: $(grep -c ">" $input2_cleaned_seqs)"
+
 else
     echo "Cleaned sequences file $input2_cleaned_seqs already exists. Skipping cleanup."
 fi
@@ -80,7 +85,7 @@ fi
 # Sequence Deduplication
 # ==============================
 if [ ! -f "$input3_deduplicated_seqs" ]; then
-    similarity_threshold=0.99
+    similarity_threshold=0.95
     echo "Running duplicate sequence removal..."
 
     # Call the remove_duplicate_sequences_fasta.sh script to remove duplicate gene names
@@ -92,7 +97,6 @@ if [ ! -f "$input3_deduplicated_seqs" ]; then
         exit 1
     fi
 
-    echo "Duplicate removal complete: $input2_cleaned_seqs"
     echo "Running CD-HIT to remove any sequences with >${similarity_threshold} similarity..."
 
     export PATH=/home/jaman_umass_edu/bin:$PATH
@@ -107,7 +111,7 @@ if [ ! -f "$input3_deduplicated_seqs" ]; then
         exit 1
     fi
 
-    echo "Deduplication complete: $input3_deduplicated_seqs"
+    echo "Deduplication complete: Genes in the deduplicated file: $(grep -c ">" $input3_deduplicated_seqs)"
 else
     echo "Deduplicated sequences file $input3_deduplicated_seqs already exists. Skipping deduplication."
 fi
@@ -120,7 +124,7 @@ if [ ! -f "$input4_aligned" ]; then
         echo "Input data is not an alignment. Running MAFFT..."
         mafft --quiet --maxiterate 1000 --localpair --reorder --thread 16 "$input3_deduplicated_seqs" > "$input4_aligned"
         final_input_ready_for_iqtree="$input4_aligned"
-        echo "Alignment complete: $input4_aligned"
+        echo "Alignment complete: Genes in the aligned file: $(grep -c ">" $input4_aligned)"
     else
         echo "File is already aligned. No further alignment needed."
         final_input_ready_for_iqtree="$input3_deduplicated_seqs"
@@ -134,7 +138,7 @@ fi
 # Tree Inference with IQ-TREE
 # ==============================
 echo "Starting IQ-TREE inference..."
-
+echo "Genes in the tree input file: $(grep -c ">" $final_input_ready_for_iqtree)"
 # Create a subdirectory for IQ-TREE analysis files
 iqtree_dir="${tree_inference_dir}/iqtree_analysis"
 mkdir -p "$iqtree_dir"
