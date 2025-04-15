@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the HMM search parameters
-hmm_score_threshold=1070  # Set the HMM score threshold 
+hmm_score_threshold=1000  # Set the HMM score threshold 
 number_results_to_collect=3  # Alternatively, define a set number of results from each protein database to collect.
 use_hmm_score_threshold="true"
 
@@ -48,8 +48,9 @@ while [ -d "$run_dir" ]; do
     fi
     run_name="${run_name}_${suffix}"  # Update run_name with new suffix
     run_dir="${results_dir}/results_${run_name}"  # Update run_dir with new run_name
-    echo "This run will be housed in the results subdirectory named ${run_name}"
+    
 done
+echo "This run will be named ${run_name}."
 
 # Create the unique run directory
 mkdir -p "$run_dir"
@@ -150,8 +151,7 @@ job3_out="${tree_inference_dir}/slurm-${run_name}_infer_tree_%j.out"
 job3_err="${tree_inference_dir}/slurm-${run_name}_infer_tree_%j.err"
 
 # Run the script, and store the job details
-job3=$(sbatch --cpus-per-task=$((NUM_CORES + 1)) --dependency=afterok:$job2_id --export=output_var_file -o $job3_out -e $job3_err ${tree_inference_script})
-#job3=$(sbatch --partition=gpu --gpus=1 --cpus-per-task=$((NUM_CORES + 1)) --dependency=afterok:$job2_id --export=output_var_file -o $job3_out -e $job3_err ${tree_inference_script})
+job3=$(sbatch --dependency=afterok:$job2_id --export=output_var_file -o $job3_out -e $job3_err ${tree_inference_script})
 job3_id=$(echo $job3 | awk '{print $4}')
 
 # Check if the job submission succeeded

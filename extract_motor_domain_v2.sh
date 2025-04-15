@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --partition=cpu        # Partition to use
 #SBATCH --nodes=1                   # Number of nodes
-#SBATCH --ntasks=1                  # Number of tasks (processes)
-#SBATCH --cpus-per-task=32           # Number of CPU cores per task
-#SBATCH --mem=120G                   # Memory per node
+#SBATCH --ntasks=1                  # Number of tasks
+#SBATCH --cpus-per-task=8           # Reduced CPU cores per task
+#SBATCH --mem=30G                   # Reduced memory
 #SBATCH -t 01:00:00
 #SBATCH -o slurm-%j.out
 #SBATCH -e slurm-%j.err
@@ -17,14 +17,14 @@ module load uri/main
 module load HMMER/3.3.2-iimpi-2021b
 
 
-# Source the variables from the output_var_file
-if [ -z "$output_var_file" ]; then
-    echo "Error: output_var_file is not set."
+# Source the variable file to load all variables into the environment
+if [ -f "$shared_variables_file" ]; then
+    source $shared_variables_file
+    IFS=' ' read -r -a database_dirs <<< "$database_dirs"
+else
+    echo "Error: Variable file not found."
     exit 1
 fi
-source $output_var_file
-
-
 
 
 
@@ -100,10 +100,10 @@ END {
 }')
 
 # Calculate lower length threshold
-lower_length_threshold=$(echo "$median_length * 0.6" | bc)
+lower_length_threshold=$(echo "$median_length * 0.5" | bc)
 
 # Calculate upper length threshold
-upper_length_threshold=$(echo "$median_length * 1.4" | bc)
+upper_length_threshold=$(echo "$median_length * 1.5" | bc)
 
 # Define the filtered output file
 filtered_output_file="${length_output_file}.filtered"
@@ -146,9 +146,14 @@ done < "$filtered_output_file"
 # Cleanup intermediate files
 rm "$simplified_output_file" "$merged_output_file" "$length_output_file" "$filtered_output_file"
 
+#add the output file name and path to the shared variable file
+{
+    echo "extracted_domains_fasta_file=${extracted_domains_fasta_file}"
+} >> "${shared_variables_file}"
+
 # Report 
 echo "number of lines in the domain-extraction collected seqs file, should be 2X the number in the filtered output file:"
 cat ${extracted_domains_fasta_file} | wc -l
 
 # Append the following variables to the job_variables.txt file for downstream scripts to use
-echo "extracted_domains_fasta_file=${extracted_domains_fasta_file}" >> ${output_var_file}
+echo "extracted_domains_fasta_file=${extracted_domains_fasta_file}" >> ${shared_variables_file}
